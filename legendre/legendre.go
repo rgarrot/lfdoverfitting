@@ -1,5 +1,6 @@
 package legendre
 
+//Calculate legendre polynomial of degree k
 func Legendre(k int, x float64) float64 {
   switch k {
     case 0:
