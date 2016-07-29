@@ -1,12 +1,12 @@
 package main
 
 import (
-	"golearn/num"
 	"image/color"
 
 	"github.com/gonum/plot"
 	"github.com/gonum/plot/plotter"
 	"github.com/gonum/plot/vg"
+	"github.com/rgarrot/lfdoverfitting/golearn/num"
 )
 
 func plotBase(b Base, yP2 num.Matrix, yP10 num.Matrix) {

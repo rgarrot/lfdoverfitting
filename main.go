@@ -2,11 +2,11 @@ package main
 
 import (
 	"fmt"
-	"golearn/linear"
-	"golearn/num"
 	"math"
 	"math/rand"
 	"time"
+
+	"github.com/rgarrot/lfdoverfitting/golearn/num"
 )
 
 func init() {
@@ -15,36 +15,40 @@ func init() {
 
 func main() {
 	var inicio = time.Now()
-	fmt.Printf("\nv14\n")
+	fmt.Printf("\nv15\n")
 
-	var b = geraBase(5, 120, 0.0)
+	e := esp([]float64{2.0, 1.0, 3.0}, []float64{1.0, 2.0, 3.0, 7.0})
+	fmt.Printf("%f \n", e)
 
-	xg2 := g2(b)
-	xg10 := g10(b)
-	y := y(b)
-	model := linear.LinearModel{}
-	model.Fit(xg2, y)
-	//fmt.Printf("G2 Mean Squared Error: %.7f \n", model.Error)
-	yP2 := xg2.Times(model.Coefs)
-	model.Fit(xg10, y)
-	//fmt.Printf("G10 Mean Squared Error: %.7f \n", model.Error)
-	yP10 := xg10.Times(model.Coefs)
-
-	plotBase(b, yP2, yP10)
-
-	//fmt.Printf("%f", b.Y)
-	//fmt.Printf("X %d, Y %d, A %d \n", len(b.X), len(b.Y), len(b.A))
 	/*
+		var b = geraBase(5, 120, 0.0)
+
 		xg2 := g2(b)
 		xg10 := g10(b)
 		y := y(b)
 		model := linear.LinearModel{}
 		model.Fit(xg2, y)
-		//fmt.Printf("Computed a=\n%v\n", model.Coefs)
 		fmt.Printf("G2 Mean Squared Error: %.7f \n", model.Error)
+		yP2 := xg2.Times(model.Coefs)
 		model.Fit(xg10, y)
-		//fmt.Printf("Computed a=\n%v\n", model.Coefs)
 		fmt.Printf("G10 Mean Squared Error: %.7f \n", model.Error)
+		yP10 := xg10.Times(model.Coefs)
+
+		plotBase(b, yP2, yP10)
+
+		//fmt.Printf("%f", b.Y)
+		//fmt.Printf("X %d, Y %d, A %d \n", len(b.X), len(b.Y), len(b.A))
+		/*
+			xg2 := g2(b)
+			xg10 := g10(b)
+			y := y(b)
+			model := linear.LinearModel{}
+			model.Fit(xg2, y)
+			//fmt.Printf("Computed a=\n%v\n", model.Coefs)
+			fmt.Printf("G2 Mean Squared Error: %.7f \n", model.Error)
+			model.Fit(xg10, y)
+			//fmt.Printf("Computed a=\n%v\n", model.Coefs)
+			fmt.Printf("G10 Mean Squared Error: %.7f \n", model.Error)
 	*/
 	fmt.Printf("tempo total:  %s", time.Since(inicio))
 
