@@ -2,95 +2,34 @@ package main
 
 import (
 	"fmt"
-	"math"
 	"math/rand"
 	"time"
-
-	"github.com/rgarrot/lfdoverfitting/golearn/num"
 )
 
 func init() {
 	rand.Seed(int64(time.Now().Nanosecond()))
+	criaMatrizLegendre(100)
 }
 
 func main() {
 	var inicio = time.Now()
-	fmt.Printf("\nv15\n")
+	fmt.Printf("\nv48\n")
 
-	e := esp([]float64{2.0, 1.0, 3.0}, []float64{1.0, 2.0, 3.0, 7.0})
-	fmt.Printf("%f \n", e)
+	var b = geraBase(2, 20, 0.0)
+	g2 := polyfit(b, 2)
+	g10 := polyfit(b, 10)
 
-	/*
-		var b = geraBase(5, 120, 0.0)
+	writeBase(b)
 
-		xg2 := g2(b)
-		xg10 := g10(b)
-		y := y(b)
-		model := linear.LinearModel{}
-		model.Fit(xg2, y)
-		fmt.Printf("G2 Mean Squared Error: %.7f \n", model.Error)
-		yP2 := xg2.Times(model.Coefs)
-		model.Fit(xg10, y)
-		fmt.Printf("G10 Mean Squared Error: %.7f \n", model.Error)
-		yP10 := xg10.Times(model.Coefs)
+	fmt.Printf("f: %v \n\n", b.F)
+	fmt.Printf("g2: %v \n\n", g2)
+	fmt.Printf("g10: %v", g10)
+	// plotBase(b, yP2, yP10)
 
-		plotBase(b, yP2, yP10)
-
-		//fmt.Printf("%f", b.Y)
-		//fmt.Printf("X %d, Y %d, A %d \n", len(b.X), len(b.Y), len(b.A))
-		/*
-			xg2 := g2(b)
-			xg10 := g10(b)
-			y := y(b)
-			model := linear.LinearModel{}
-			model.Fit(xg2, y)
-			//fmt.Printf("Computed a=\n%v\n", model.Coefs)
-			fmt.Printf("G2 Mean Squared Error: %.7f \n", model.Error)
-			model.Fit(xg10, y)
-			//fmt.Printf("Computed a=\n%v\n", model.Coefs)
-			fmt.Printf("G10 Mean Squared Error: %.7f \n", model.Error)
-	*/
 	fmt.Printf("tempo total:  %s", time.Since(inicio))
 
 }
 
-func g2(b Base) num.Matrix {
-	m := len(b.X)
-	result := num.Zeros(m, 3)
-
-	for row := 0; row < m; row++ {
-		result.Data[row][0] = 1
-		result.Data[row][1] = b.X[row]
-		result.Data[row][2] = math.Pow(b.X[row], 2)
-	}
-	return result
-}
-
-func g10(b Base) num.Matrix {
-	m := len(b.X)
-	result := num.Zeros(m, 11)
-
-	for row := 0; row < m; row++ {
-		result.Data[row][0] = 1
-		result.Data[row][1] = b.X[row]
-		result.Data[row][2] = math.Pow(b.X[row], 2)
-		result.Data[row][3] = math.Pow(b.X[row], 3)
-		result.Data[row][4] = math.Pow(b.X[row], 4)
-		result.Data[row][5] = math.Pow(b.X[row], 5)
-		result.Data[row][6] = math.Pow(b.X[row], 6)
-		result.Data[row][7] = math.Pow(b.X[row], 7)
-		result.Data[row][8] = math.Pow(b.X[row], 8)
-		result.Data[row][9] = math.Pow(b.X[row], 9)
-		result.Data[row][10] = math.Pow(b.X[row], 10)
-	}
-	return result
-}
-
-func y(b Base) num.Matrix {
-	m := len(b.X)
-	result := num.Zeros(m, 1)
-	for row := 0; row < m; row++ {
-		result.Data[row][0] = b.Y[row]
-	}
-	return result
+func eout(f []float64, g []float64) float64 {
+	return esp(g, g) - 2*esp(g, f) + esp(f, f)
 }
